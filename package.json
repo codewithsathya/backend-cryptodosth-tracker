@@ -1,0 +1,25 @@
+{
+  "name": "backend-cryptodosth-tracker",
+  "version": "1.0.0",
+  "description": "Backend for cyrptodosth.com",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codewithsathya/backend-cryptodosth-tracker.git"
+  },
+  "author": "codewithsathya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codewithsathya/backend-cryptodosth-tracker/issues"
+  },
+  "homepage": "https://github.com/codewithsathya/backend-cryptodosth-tracker#readme",
+  "dependencies": {
+    "debug": "^2.6.9",
+    "express": "^4.17.1",
+    "http-errors": "^1.7.2",
+    "morgan": "^1.10.0"
+  }
+}
