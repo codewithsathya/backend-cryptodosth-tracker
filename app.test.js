@@ -13,6 +13,8 @@ const getTimeFrameInMilliseconds = require("./utils/getTimeFrameInMilliseconds")
 
 const app = express();
 
+app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send(diff_1m);
 })
@@ -99,7 +101,7 @@ async function putAndDelete(){
     console.log(diffTime);
     await CombinedCandles.find({time : diffTime}).then(result => {
       console.log(result);
-      diffTime = result[0].data;
+      diffTime = result[0];
     });
   } catch (error) {
     console.error(error);
