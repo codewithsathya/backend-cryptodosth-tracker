@@ -14,11 +14,11 @@ const getTimeFrameInMilliseconds = require("./utils/getTimeFrameInMilliseconds")
 const app = express();
 
 app.get("/", (req, res) => {
-  res.send("Hello");
+  res.send(diff_1m);
 })
 
 let coinsArr = [];
-let quotes = "USDT";
+let quotes = "USDC";
 
 async function setCoins() {
   let tradableCoins = await getTradableCoins();
@@ -84,12 +84,26 @@ function repeat(){
   setTimeout(repeat, millis);
 }
 
+let diff_1m;
+
 async function putAndDelete(){
   let timeNow = new Date().getTime();
   let doc = mapDataToDocuments(await getAllCoinsCandles(timeNow, 1, "1m"), coinsArr, CombinedCandles);
+  let endTime = doc[0].time;
   await CombinedCandles.insertMany(doc);
   await deleteExtraFrontCandles(1, timeNow);
   debug("Updated", timeNow)
+  let i = 1;
+  try {
+    let diffTime = endTime - getTimeFrameInMilliseconds("1m") * (i - 1);
+    console.log(diffTime);
+    await CombinedCandles.find({time : diffTime}).then(result => {
+      console.log(result);
+      diffTime = result[0].data;
+    });
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 async function initialize() {
@@ -133,6 +147,9 @@ async function deleteExtraFrontCandles(extraCandlesRequired, endTime){
   await CombinedCandles.deleteMany({time: { $lt : frontTime }});
   debug("Delete front");
 }
+
+
+
 
 initialize();
 

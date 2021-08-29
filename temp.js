@@ -1,3 +1,7 @@
+const MongoClient = require("mongodb").MongoClient;
+
+let uri = "mongodb+srv://ritesh:8127@cluster0.ey1dg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+let dbName = "myFirstDatabase";
 MongoClient.connect(uri, (err, db) => {
 	if(err) throw err;
   let dbo = db.db(dbName);
@@ -5,55 +9,14 @@ MongoClient.connect(uri, (err, db) => {
 })
 
 MongoClient.connect(uri, async (err, db) => {
-  // if(err) throw err;
-  // let dbo = db.db(dbName);
-  // let result = await getLatestCandles(arr[3], "1m", 1000);
-  // let obj = result.map(item => {
-  //   let i = {};
-  //   i.time = item[0];
-  //   i.open = item[1];
-  //   i.high = item[2];
-  //   i.low = item[3];
-  //   i.close = item[4];
-  //   return i;
-  // })
-  // dbo.collection("ETH").insertMany(obj, (err, res) => {
-  //   if(err) throw err;
-  //   debug("Documents inserted");
-  //   db.close();
-  // })
+  if(err) throw err;
+  let dbo = db.db(dbName);
+  dbo.collection("1m_combinedcandles").find({}, {time: 1, _id:0}).toArray((err, res) => {
+    let arr = res.map(obj => {
+      return obj.time;
+    })
+    let firstTime = new Date(arr[999]).toISOString();
+    console.log(firstTime);
+    db.close();
+  });
 })
-
-
-//services
-const {
-  getLastCandle,
-  getLatestCandles,
-} = require("./services/binanceCandles");
-
-const app = express();
-
-app.use(express.json());
-
-let arr = ["BTCUSDT", "BNBUSDT", "ADAUSDT", "ETHUSDT"];
-let result;
-
-async function show() {
-  // result = await getLastCandle(arr[0], "1m");
-  result = await getLatestCandles(arr[0], "1m", 1500);
-  debug("Loaded candles");
-}
-
-app.get("/", async (req, res) => {
-  // result = await getLastCandle(arr[0], "1m");
-  MongoClient.connect(uri, async (err, db) => {
-    if(err) throw err;
-    let dbo = db.db("cryptodosth");
-    dbo.collection("ETH").find().toArray((err, result) => {
-      if(err) throw err;
-      res.send(result);
-      db.close();
-    });
-  })
-  debug("Connected...");
-});
