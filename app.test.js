@@ -101,7 +101,7 @@ async function putAndDelete(){
     console.log(diffTime);
     await CombinedCandles.find({time : diffTime}).then(result => {
       console.log(result);
-      diffTime = result[0];
+      diff_1m = result[0];
     });
   } catch (error) {
     console.error(error);
