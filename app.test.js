@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 })
 
 let coinsArr = [];
-let quotes = "USDC";
+let quotes = "USDT";
 
 async function setCoins() {
   let tradableCoins = await getTradableCoins();
