@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+const app = require("../app.test");
+const debug = require('debug')('cryptodosth:testing');
+const http = require("http");
+
+const port = process.env.port || 5000;
+app.set("port", port);
+
+const server = http.createServer(app);
+
+server.listen(port);
+server.on('listening', onListening);
+
+function onListening(){
+	debug("Listening on port " + port);
+}

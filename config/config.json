@@ -1,0 +1,7 @@
+{
+	"binance": {
+		"apiUrl": "https://api.binance.com/api/v3",
+		"candlesPerRequest": 1000,
+		"requestsPerMinute": 1200
+	}
+}
