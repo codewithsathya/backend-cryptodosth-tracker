@@ -90,8 +90,9 @@ let diff_1m = "Coming Soon";
 
 async function putAndDelete(){
   let timeNow = new Date().getTime();
-  let doc = mapDataToDocuments(await getAllCoinsCandles(timeNow, 1, "1m"), coinsArr, CombinedCandles);
+  let doc = mapDataToDocuments(await getAllCoinsCandles(timeNow, 2, "1m"), coinsArr, CombinedCandles);
   let endTime = doc[0].time;
+  await CombinedCandles.deleteOne({time: endTime - getTimeFrameInMilliseconds("1m")})
   await CombinedCandles.insertMany(doc);
   await deleteExtraFrontCandles(1, timeNow);
   debug("Updated", timeNow)
