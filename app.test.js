@@ -13,6 +13,10 @@ const getTimeFrameInMilliseconds = require("./utils/getTimeFrameInMilliseconds")
 
 const app = express();
 
+app.get("/", (req, res) => {
+  res.send("Hello");
+})
+
 let coinsArr = [];
 let quotes = "USDT";
 
