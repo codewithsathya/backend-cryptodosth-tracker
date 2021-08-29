@@ -84,7 +84,7 @@ function repeat(){
   setTimeout(repeat, millis);
 }
 
-let diff_1m;
+let diff_1m = "Coming Soon";
 
 async function putAndDelete(){
   let timeNow = new Date().getTime();
